@@ -1,0 +1,41 @@
+.gif-uploader-container {
+  display: block;
+  height: 16em;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.error-msg {
+  text-align: center;
+  color: red;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
+}
+
+.file-status-bar {
+  width: 80%;
+  height: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  vertical-align: top;
+}
+
+.file-status-bar > div {
+  overflow: hidden;
+}
+
+.file-name {
+  display: inline-block;
+  margin-left: 3em;
+  color: #4aa1f3;
+}
+
+.file-size {
+  display: inline-block;
+  margin-left: 0.5em;
+  color: #444242;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+/*# sourceMappingURL=GifUploader.css.map */
