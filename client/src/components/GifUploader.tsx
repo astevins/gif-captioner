@@ -20,7 +20,7 @@ class GifUploader extends React.Component<any, State> {
         this.ErrorMessage = this.ErrorMessage.bind(this);
     }
 
-    onFileSelect(files: FileList) {
+    onFileSelect(files: File[]) {
         console.log("onUpload called");
         let validFile = null;
         for (let file of files) {
@@ -85,7 +85,7 @@ class GifUploader extends React.Component<any, State> {
         return (
             <div>
                 <div className="gif-uploader-container">
-                    <Dropzone onUpload={this.onFileSelect}/>
+                    <Dropzone onFileSelect={this.onFileSelect}/>
                     <this.ErrorMessage />
                     <this.DisplayFile />
                     <button type="button"

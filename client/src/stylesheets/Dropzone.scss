@@ -4,6 +4,12 @@
     margin: 0;
     height: 12em;
     border: .25em dashed #4aa1f3;
+    background: white;
+}
+
+.drop-container-dragged-over {
+    @extend .drop-container;
+    background: lightgray;
 }
 
 .upload-icon {
@@ -17,7 +23,7 @@
     pointer-events: none;
 }
 
-.drop-message {
+.drop-message-container {
     text-align: center;
     color: #4aa1f3;
     font-family: Arial, sans-serif;
