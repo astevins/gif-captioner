@@ -1,82 +1,117 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import '../stylesheets/Dropzone.scss';
-
-export interface Props {
-    onUpload: (files: FileList) => void
-}
-
-type State = {
-    dragCounter: number;
-};
 
 // Used tutorial to help with file drop zone:
 // https://blog.logrocket.com/create-a-drag-and-drop-component-with-react-dropzone/
-export default class Dropzone extends React.Component<Props, State> {
-    private readonly onUpload: (files: FileList) => void;
 
-    state: State = {dragCounter: 0};
+export interface Props {
+    /** Callback when files are selected by drag & drop
+     * or by click & select. */
+    onFileSelect: (files: File[]) => void;
+
+    /** If true, dropzone will allow multiple files to be selected.
+     * If false, dropzone will only accept one selected file. */
+    allowMultiple: boolean;
+
+    /** File types to be accepted by "click & select" file selector window
+     * (not drag & drop).
+     *
+     * See valid types:
+     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers */
+    acceptedTypes: string;
+}
+
+export type State = {
+    draggedOver: boolean;
+};
+
+/** Offers two options for user file selection:
+ * * Drag and drop file(s) into the dropzone
+ * * Click to select files from file selection window */
+export default class Dropzone extends React.Component<Props, State> {
+    public static defaultProps: Partial<Props> = {
+        allowMultiple: true,
+        acceptedTypes: "*"
+    }
+
+    state: State = {draggedOver: false};
 
     constructor(props: Props) {
         super(props);
-        this.onUpload = props.onUpload;
-        this.fileDropHandler = this.fileDropHandler.bind(this);
         this.dragEnterHandler = this.dragEnterHandler.bind(this);
         this.dragLeaveHandler = this.dragLeaveHandler.bind(this);
-        this.dragOverHandler = this.dragOverHandler.bind(this);
+        this.fileDropHandler = this.fileDropHandler.bind(this);
+        this.clickFileSelectHandler = this.clickFileSelectHandler.bind(this);
     }
 
-    dragOverHandler(e: React.DragEvent) {
+    private dragOverHandler(e: React.DragEvent) {
         e.preventDefault();
     }
 
-    dragEnterHandler(e: React.DragEvent) {
+    private dragEnterHandler(e: React.DragEvent) {
         e.preventDefault();
         console.log("Drag enter")
-        this.setState({dragCounter: 1});
+        this.setState({draggedOver: true});
     }
 
-    dragLeaveHandler(e: React.DragEvent) {
+    private dragLeaveHandler(e: React.DragEvent) {
         e.preventDefault();
         console.log("Drag leave")
-        this.setState({dragCounter: 0});
+        this.setState({draggedOver: false});
     }
 
-    fileDropHandler(e: React.DragEvent) {
+    private fileDropHandler(e: React.DragEvent) {
         e.preventDefault();
         console.log("fileDrop");
         if (e.dataTransfer && e.dataTransfer.files.length) {
-            this.onUpload(e.dataTransfer.files);
+            if (this.props.allowMultiple) {
+                this.props.onFileSelect(Array.from(e.dataTransfer.files));
+            } else {
+                this.props.onFileSelect([e.dataTransfer.files[0]]);
+            }
         }
-        this.setState({dragCounter: 0});
+        this.setState({draggedOver: false});
     }
 
-    onClick(e: React.MouseEvent) {
-        e.preventDefault();
+    private clickFileSelectHandler(e: ChangeEvent<HTMLInputElement>) {
+        e.preventDefault()
+        console.log("file select");
+        if (e.target.files) {
+            this.props.onFileSelect(Array.from(e.target.files));
+        }
     }
 
     render() {
+        const dropContainerClassName = "drop-container"
+            + (this.state.draggedOver? "-dragged-over" : "");
+
         return (
-            <div className="drop-container"
-                 onDragEnter={this.dragEnterHandler}
-                 onDragLeave={this.dragLeaveHandler}
-                 onDragOver={this.dragOverHandler}
-                 onDrop={this.fileDropHandler}
-                 onClick={this.onClick}
-                 style={{
-                     background: this.state.dragCounter? "#e2e2e2" : "#ffffff"
-                 }}>
-                <div className="drop-message"
-                     id="drop-message-container"
+            <label htmlFor="file-input">
+                <div className={dropContainerClassName}
+                     aria-label="dropzone"
+                     title="dropzone"
+                     onDragEnter={this.dragEnterHandler}
+                     onDragLeave={this.dragLeaveHandler}
+                     onDragOver={this.dragOverHandler}
                      onDrop={this.fileDropHandler}>
-                    <div className="upload-icon"></div>
-                    <p id="drop-message"
-                       onDrop={this.fileDropHandler}>
-                        {this.state.dragCounter?
-                            "Drop file"
-                            : "Drag & drop gif here or click to select"}
-                    </p>
+                    <input id="file-input"
+                           type="file"
+                           title="file input"
+                           accept={this.props.acceptedTypes}
+                           style={{display: "none"}}
+                           multiple={this.props.allowMultiple}
+                           onChange={this.clickFileSelectHandler}/>
+                    <div className="drop-message-container"
+                         onDrop={this.fileDropHandler}>
+                        <div className="upload-icon"></div>
+                        <p onDrop={this.fileDropHandler}>
+                            {this.state.draggedOver?
+                                "Drop file"
+                                : "Drag & drop file here or click to select"}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </label>
         )
     }
 }
