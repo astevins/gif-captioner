@@ -8,11 +8,11 @@
     "node": "16.1.0"
   },
   "scripts": {
-    "start": "cd server && yarn start",
+    "start": "cd server && yarn && yarn start",
     "heroku-postbuild": "cd client && yarn && yarn run build",
     "client-start": "cd client && yarn start",
-    "client-install"  : "cd client && yarn install",
-    "server-install"  : "cd server && yarn install",
+    "client-install": "cd client && yarn install",
+    "server-install": "cd server && yarn install",
     "install-all-deps": "concurrently \"yarn server-install\" \"yarn client-install\""
   }
 }
