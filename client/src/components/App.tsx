@@ -6,7 +6,9 @@ function App() {
     return (
         <div className="app-container">
             <h1>Gif Captioner</h1>
-            <GifUploader/>
+            <GifUploader onGifUpload={() => {
+                return;
+            }}/>
             <div className="attribution-footer">
                 <p>
                     Icons made by
