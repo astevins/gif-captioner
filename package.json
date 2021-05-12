@@ -5,7 +5,8 @@
     "global": "^4.4.0"
   },
   "engines": {
-    "node": "16.1.0"
+    "node": "16.1.0",
+    "yarn": "1.22.5"
   },
   "scripts": {
     "start": "cd server && yarn && yarn start",
