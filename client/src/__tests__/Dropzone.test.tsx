@@ -1,16 +1,27 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react'
+import {render, cleanup, screen, fireEvent} from '@testing-library/react'
 import Dropzone from "../components/Dropzone";
 
-afterEach(cleanup)
+function initDropzone(fileSelectCallback: (files: File[]) => void = jest.fn()): HTMLElement {
+    render(<Dropzone onFileSelect={fileSelectCallback}/>);
+    return screen.getByTitle("dropzone");
+}
+
+export function simulateFileDrop(dropzone: HTMLElement, files: File[]) {
+    fireEvent.drop(dropzone, {
+        dataTransfer: {
+            files: files,
+        }});
+}
 
 describe("Dropzone", () => {
-    function initDropzone(uploadCallback = jest.fn(), acceptedTypes?: string): HTMLElement {
-        render(acceptedTypes?
-            <Dropzone onFileSelect={uploadCallback} acceptedTypes={acceptedTypes}/>
-            : <Dropzone onFileSelect={uploadCallback}/>);
-        return screen.getByTitle("dropzone");
-    }
+    let testGif: File;
+    let testPdf: File;
+
+    beforeAll(() => {
+        testGif = new File(["data"], "toad.gif", { type: "image/gif" });
+        testPdf = new File(["data"], "dragonfly.pdf", { type: "application/pdf" });
+    })
 
     it("renders dropzone", () => {
         const dropzone = initDropzone();
@@ -37,25 +48,19 @@ describe("Dropzone", () => {
     function testFileDrop(testFiles: File[]) {
         const fileDropCallback = jest.fn();
         const dropzone = initDropzone(fileDropCallback);
-
-        fireEvent.drop(dropzone, {
-            dataTransfer: {
-                files: testFiles,
-            }});
+        simulateFileDrop(dropzone, testFiles);
 
         expect(fileDropCallback).toHaveBeenCalledTimes(1);
         expect(fileDropCallback).toHaveBeenCalledWith(testFiles);
     }
 
     it("respond to file drop: single file", () => {
-        const testFiles: File[] = [new File(["data"], "toad.gif", { type: "image/gif" })];
+        const testFiles: File[] = [testGif];
         testFileDrop(testFiles);
     });
 
     it("respond to file drop: multiple files", () => {
-        const testFiles: File[] = [
-            new File(["data"], "toad.gif", { type: "image/gif" }),
-            new File(["data"], "dragonfly.pdf", { type: "application/pdf" })];
+        const testFiles: File[] = [testGif, testPdf];
         testFileDrop(testFiles);
     });
 
@@ -63,7 +68,7 @@ describe("Dropzone", () => {
         const fileDropCallback = jest.fn();
         initDropzone(fileDropCallback);
 
-        const testFile: File = new File(["data"], "toad.gif", { type: "image/gif" });
+        const testFile = testGif;
         const fileInput = screen.getByTitle("file input");
 
         fireEvent.change(fileInput, {

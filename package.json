@@ -1,0 +1,18 @@
+{
+  "license": "unlicensed",
+  "private": true,
+  "dependencies": {
+    "global": "^4.4.0"
+  },
+  "engines": {
+    "node": "16.1.0"
+  },
+  "scripts": {
+    "start": "cd server && yarn start",
+    "heroku-postbuild": "cd client && yarn && yarn run build",
+    "client-start": "cd client && yarn start",
+    "client-install"  : "cd client && yarn install",
+    "server-install"  : "cd server && yarn install",
+    "install-all-deps": "concurrently \"yarn server-install\" \"yarn client-install\""
+  }
+}
