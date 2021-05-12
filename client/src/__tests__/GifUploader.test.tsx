@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react'
 import GifUploader from "../components/GifUploader";
-import {initMockServer} from "../mock/mock-server";
+import {initMockServer} from "./mock/mock-server";
 import {Server, Registry, Response} from 'miragejs';
 import {ModelDefinition, AnyFactories} from 'miragejs/-types';
 import {simulateFileDrop} from "./Dropzone.test";
