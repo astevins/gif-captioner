@@ -1,0 +1,1 @@
+export const ORIGINAL_GIF = "/files/original-gif";

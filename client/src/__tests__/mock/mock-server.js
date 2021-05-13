@@ -40,5 +40,3 @@ export function initMockServer(environment = "test") {
 }
 
 initMockServer();
-
-it("dummy test", () => {});

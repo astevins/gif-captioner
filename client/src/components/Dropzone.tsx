@@ -50,13 +50,11 @@ export default class Dropzone extends React.Component<Props, State> {
 
     private dragEnterHandler(e: React.DragEvent) {
         e.preventDefault();
-        console.log("Drag enter")
         this.setState({draggedOver: true});
     }
 
     private dragLeaveHandler(e: React.DragEvent) {
         e.preventDefault();
-        console.log("Drag leave")
         this.setState({draggedOver: false});
     }
 

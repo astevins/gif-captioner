@@ -15,7 +15,7 @@ if (app.get('env') === 'development'){
   require('dotenv').config();
 }
 
-app.use("/files", files)
+app.use("/api/files", files);
 
 // Get static
 app.get("/*", (req, res) => {

@@ -28,7 +28,7 @@
   "scripts": {
     "start": "env-cmd -f .env react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --testPathIgnorePatterns=\"src/__tests__/mock/mock-server.js\"",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject",
     "styleguide": "styleguidist server",

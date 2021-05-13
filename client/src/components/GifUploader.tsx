@@ -5,8 +5,6 @@ import {ErrorMessage} from "./ErrorMessage";
 import axios, {AxiosInstance} from "axios";
 import {ORIGINAL_GIF} from "../api-paths";
 
-const GIF_UPLOAD_PATH = "/api/original-gif";
-
 export interface Props {
     onGifUpload: (() => void);
 }
@@ -77,6 +75,7 @@ class GifUploader extends React.Component<Props, State> {
             return;
         }
 
+        console.log("Uploading file from GifUploader: " + this.state.selectedFile);
         let formData = new FormData();
         formData.append("file", this.state.selectedFile as File, this.state.selectedFile.name);
         this.setState({uploadState: "uploading"});
@@ -96,7 +95,8 @@ class GifUploader extends React.Component<Props, State> {
             this.setState({uploadState: "error"});
             if (error && error.response) {
                 this.setErrorMessage(ErrorMsgType.fileSelect,
-                    "Failed to upload, server responded with " + error.response.status);
+                    "Failed to upload, server responded with \n" +
+                    + error.response.status + ": " + error.response.data.message);
             } else if (error.request) {
                 this.setErrorMessage(ErrorMsgType.fileSelect,
                     "Failed to upload, no response from server.");
@@ -137,7 +137,6 @@ class GifUploader extends React.Component<Props, State> {
     // Prepares HTML for file preview, if a file has been selected
     DisplaySelectedFile() {
         if (this.state.selectedFile) {
-            console.log("Displaying selected file");
             return (
                 <div>
                     <div className="file-status-bar">
@@ -172,7 +171,6 @@ class GifUploader extends React.Component<Props, State> {
     }
 
     render() {
-        console.log("Rendering gif uploader");
         return (
             <div>
                 <div className="gif-uploader-container">
