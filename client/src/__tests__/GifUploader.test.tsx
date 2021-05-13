@@ -6,6 +6,7 @@ import {Server, Registry, Response} from 'miragejs';
 import {ModelDefinition, AnyFactories} from 'miragejs/-types';
 import {simulateFileDrop} from "./Dropzone.test";
 import userEvent from "@testing-library/user-event";
+import {ORIGINAL_GIF} from "../api-paths";
 
 let server: Server<Registry<{ gif: ModelDefinition<{}>; }, AnyFactories>>;
 
@@ -80,7 +81,7 @@ describe("GifUploader", () => {
     it("displays error after upload fails", async () => {
         initGifUploader();
 
-        server.post("/original-gifs", () => {
+        server.put(ORIGINAL_GIF, () => {
             return new Response(400, {}, { errors: ["No response from server."] })
         })
 

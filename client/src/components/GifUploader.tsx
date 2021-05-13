@@ -3,6 +3,9 @@ import React from "react";
 import Dropzone from "./Dropzone";
 import {ErrorMessage} from "./ErrorMessage";
 import axios, {AxiosInstance} from "axios";
+import {ORIGINAL_GIF} from "../api-paths";
+
+const GIF_UPLOAD_PATH = "/api/original-gif";
 
 export interface Props {
     onGifUpload: (() => void);
@@ -15,7 +18,7 @@ enum ErrorMsgType {
 
 type State = {
     selectedFile: File | null;
-    uploadedFile: { name: string, id: number } | null;
+    uploadedFile: string | null;
     uploadState: "none" | "uploading" | "uploaded" | "error";
     error: { [key in ErrorMsgType]: string | null };
 };
@@ -78,7 +81,7 @@ class GifUploader extends React.Component<Props, State> {
         formData.append("file", this.state.selectedFile as File, this.state.selectedFile.name);
         this.setState({uploadState: "uploading"});
         try {
-            const res = await this.axiosClient.post("/api/original-gifs",
+            const res = await this.axiosClient.put("/api" + ORIGINAL_GIF,
                 formData,
                 {
                     headers: {
@@ -87,7 +90,7 @@ class GifUploader extends React.Component<Props, State> {
                 });
 
             this.setState({uploadState: "uploaded"});
-            this.setState({uploadedFile: res.data});
+            this.setState({uploadedFile: res.data.name});
             this.setErrorMessage(ErrorMsgType.fileUpload, null);
         } catch(error: any) {
             this.setState({uploadState: "error"});
@@ -159,7 +162,7 @@ class GifUploader extends React.Component<Props, State> {
         if (this.state.uploadState === "uploading") {
             msg = "Uploading"
         } else if (this.state.uploadState === "uploaded" && this.state.uploadedFile) {
-            msg = "File uploaded: " + this.state.uploadedFile.name;
+            msg = "File uploaded: " + this.state.uploadedFile;
         }
 
         return (

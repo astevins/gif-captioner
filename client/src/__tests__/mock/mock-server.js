@@ -1,4 +1,5 @@
 import {belongsTo, createServer, Model, Response} from "miragejs"
+import {ORIGINAL_GIF} from "../../api-paths";
 
 export function initMockServer(environment = "test") {
     return createServer({
@@ -14,28 +15,30 @@ export function initMockServer(environment = "test") {
         routes() {
             this.namespace = "api";
 
-            // Responding to POST request to upload gif
-            this.post("/original-gifs", (schema, request) => {
-                console.log("Post called");
+            // Responding to PUT request to upload gif
+            this.put(ORIGINAL_GIF, (schema, request) => {
+                console.log("Put /original-gif called");
 
+                return new Response(200, {},
+                    {name: "toad.gif"});
+            })
+
+            // Responding to GET request to retrieve original gif
+            this.get("/files/original-gif", (schema, request) => {
                 return new Response(200,
                     {
                         body:
                             {
                                 data: {
                                     name: "toad.gif",
-                                    id: 1
                                 }
                             }
                     });
-            })
-
-            // Responding to GET request to retrieve original gif
-            this.get("/original-gifs/:id", (schema, request) => {
-                return schema.originalGifs.find(request.params.id);
             })
         }
     });
 }
 
 initMockServer();
+
+it("dummy test", () => {});
