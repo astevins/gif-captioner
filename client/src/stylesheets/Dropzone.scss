@@ -1,32 +1,32 @@
 .drop-container {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    height: 12em;
-    border: .25em dashed #4aa1f3;
-    background: white;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  height: 12em;
+  border: .25em dashed #4aa1f3;
+  background: white;
 }
 
 .drop-container-dragged-over {
-    @extend .drop-container;
-    background: lightgray;
+  @extend .drop-container;
+  background: lightgray;
 }
 
 .upload-icon {
-    width: 3em;
-    height: 3em;
-    background: url(../images/upload-icon.png) no-repeat center;
-    background-size: 100%;
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 3em;
-    pointer-events: none;
+  width: 3em;
+  height: 3em;
+  background: url(../images/upload-icon.png) no-repeat center;
+  background-size: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 3em;
+  pointer-events: none;
 }
 
 .drop-message-container {
-    text-align: center;
-    color: #4aa1f3;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    pointer-events: none;
+  text-align: center;
+  color: #4aa1f3;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  pointer-events: none;
 }

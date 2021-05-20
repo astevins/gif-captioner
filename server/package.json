@@ -4,9 +4,11 @@
   "license": "unlicensed",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:nodemon": "nodemon server.js"
   },
   "dependencies": {
+    "connect-mongodb-session": "^2.4.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",

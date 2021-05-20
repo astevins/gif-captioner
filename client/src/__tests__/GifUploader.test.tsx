@@ -1,9 +1,9 @@
-import React from 'react';
-import {render, screen} from '@testing-library/react'
+import React from "react";
+import {render, screen} from "@testing-library/react";
 import GifUploader from "../components/GifUploader";
 import {initMockServer} from "./mock/mock-server";
-import {Server, Registry, Response} from 'miragejs';
-import {ModelDefinition, AnyFactories} from 'miragejs/-types';
+import {Server, Registry, Response} from "miragejs";
+import {ModelDefinition, AnyFactories} from "miragejs/-types";
 import {simulateFileDrop} from "./Dropzone.test";
 import userEvent from "@testing-library/user-event";
 import {ORIGINAL_GIF} from "../api-paths";
@@ -15,9 +15,9 @@ describe("GifUploader", () => {
     let testPdf: File;
 
     beforeAll(() => {
-        testGif = new File(["data"], "toad.gif", { type: "image/gif" });
-        testPdf = new File(["data"], "dragonfly.pdf", { type: "application/pdf" });
-    })
+        testGif = new File(["data"], "toad.gif", {type: "image/gif"});
+        testPdf = new File(["data"], "dragonfly.pdf", {type: "application/pdf"});
+    });
 
     beforeEach(() => {
         server = initMockServer();
@@ -25,7 +25,7 @@ describe("GifUploader", () => {
 
     afterEach(() => {
         server.shutdown();
-    })
+    });
 
     function initGifUploader(uploadCallback: () => void = jest.fn()) {
         server = initMockServer();
@@ -75,22 +75,22 @@ describe("GifUploader", () => {
         dropAndUploadFile();
         const uploadMsg = await screen.findByText(/[Uu]ploaded/,
             {}, {timeout: 4000});
-        expect (uploadMsg).toBeTruthy()
+        expect(uploadMsg).toBeTruthy();
     });
 
     it("displays error after upload fails", async () => {
         initGifUploader();
 
         server.put(ORIGINAL_GIF, () => {
-            return new Response(400, {}, { errors: ["No response from server."] })
-        })
+            return new Response(400, {}, {errors: ["No response from server."]});
+        });
 
         dropAndUploadFile();
 
         userEvent.click(getUploadBtn());
         const uploadMsg = await screen.findByText(/Error/,
             {}, {timeout: 4000});
-        expect (uploadMsg).toBeTruthy()
+        expect(uploadMsg).toBeTruthy();
     });
 
     it("call callback function after file uploaded and confirmed", async () => {

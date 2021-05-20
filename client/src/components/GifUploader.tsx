@@ -1,4 +1,4 @@
-import '../stylesheets/GifUploader.scss';
+import "../stylesheets/GifUploader.scss";
 import React from "react";
 import Dropzone from "./Dropzone";
 import {ErrorMessage} from "./ErrorMessage";
@@ -28,7 +28,7 @@ class GifUploader extends React.Component<Props, State> {
         selectedFile: null,
         uploadedFile: null,
         uploadState: "none",
-        error: {[ErrorMsgType.fileSelect]: null, [ErrorMsgType.fileUpload]: null},
+        error: {[ErrorMsgType.fileSelect]: null, [ErrorMsgType.fileUpload]: null}
     };
     private axiosClient: AxiosInstance;
 
@@ -42,9 +42,9 @@ class GifUploader extends React.Component<Props, State> {
 
         this.axiosClient = axios.create({
             baseURL: process.env.REACT_APP_BASEURL,
-            responseType: 'json',
+            responseType: "json",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             }
         });
     }
@@ -84,19 +84,19 @@ class GifUploader extends React.Component<Props, State> {
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        "Content-Type": "multipart/form-data"
                     }
                 });
 
             this.setState({uploadState: "uploaded"});
             this.setState({uploadedFile: res.data.name});
             this.setErrorMessage(ErrorMsgType.fileUpload, null);
-        } catch(error: any) {
+        } catch (error: any) {
             this.setState({uploadState: "error"});
             if (error && error.response) {
                 this.setErrorMessage(ErrorMsgType.fileSelect,
                     "Failed to upload, server responded with \n" +
-                    + error.response.status + ": " + error.response.data.message);
+                    +error.response.status + ": " + error.response.data.message);
             } else if (error.request) {
                 this.setErrorMessage(ErrorMsgType.fileSelect,
                     "Failed to upload, no response from server.");
@@ -127,11 +127,11 @@ class GifUploader extends React.Component<Props, State> {
 
     // Formats file size with appropriate units
     private formatFileSize(size: number) {
-        if (size === 0) return '0 Bytes';
+        if (size === 0) return "0 Bytes";
         const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
         const i = Math.floor(Math.log(size) / Math.log(k));
-        return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        return parseFloat((size / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
     }
 
     // Prepares HTML for file preview, if a file has been selected
@@ -159,7 +159,7 @@ class GifUploader extends React.Component<Props, State> {
 
         let msg: String = "";
         if (this.state.uploadState === "uploading") {
-            msg = "Uploading"
+            msg = "Uploading";
         } else if (this.state.uploadState === "uploaded" && this.state.uploadedFile) {
             msg = "File uploaded: " + this.state.uploadedFile;
         }

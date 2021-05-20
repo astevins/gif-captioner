@@ -1,4 +1,4 @@
-import {belongsTo, createServer, Model, Response} from "miragejs"
+import {belongsTo, createServer, Model, Response} from "miragejs";
 import {ORIGINAL_GIF} from "../../api-paths";
 
 export function initMockServer(environment = "test") {
@@ -21,7 +21,7 @@ export function initMockServer(environment = "test") {
 
                 return new Response(200, {},
                     {name: "toad.gif"});
-            })
+            });
 
             // Responding to GET request to retrieve original gif
             this.get("/files/original-gif", (schema, request) => {
@@ -30,11 +30,11 @@ export function initMockServer(environment = "test") {
                         body:
                             {
                                 data: {
-                                    name: "toad.gif",
+                                    name: "toad.gif"
                                 }
                             }
                     });
-            })
+            });
         }
     });
 }

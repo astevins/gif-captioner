@@ -1,8 +1,8 @@
 import {GifCaptioner} from "./GifCaptioner";
 
-export class Session {
+export class SessionData {
     private originalGif: File | null;
-    private captionedGifs: {caption: string, gif: File}[]
+    private captionedGifs: { caption: string, gif: File }[];
 
     constructor() {
         this.originalGif = null;

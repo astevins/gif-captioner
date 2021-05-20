@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import '../stylesheets/Dropzone.scss';
+import "../stylesheets/Dropzone.scss";
 
 // Used tutorial to help with file drop zone:
 // https://blog.logrocket.com/create-a-drag-and-drop-component-with-react-dropzone/
@@ -32,7 +32,7 @@ export default class Dropzone extends React.Component<Props, State> {
     public static defaultProps: Partial<Props> = {
         allowMultiple: true,
         acceptedTypes: "*"
-    }
+    };
 
     state: State = {draggedOver: false};
 
@@ -72,7 +72,7 @@ export default class Dropzone extends React.Component<Props, State> {
     }
 
     private clickFileSelectHandler(e: ChangeEvent<HTMLInputElement>) {
-        e.preventDefault()
+        e.preventDefault();
         console.log("file select");
         if (e.target.files) {
             this.props.onFileSelect(Array.from(e.target.files));
@@ -81,7 +81,7 @@ export default class Dropzone extends React.Component<Props, State> {
 
     render() {
         const dropContainerClassName = "drop-container"
-            + (this.state.draggedOver? "-dragged-over" : "");
+            + (this.state.draggedOver ? "-dragged-over" : "");
 
         return (
             <label htmlFor="file-input">
@@ -103,13 +103,13 @@ export default class Dropzone extends React.Component<Props, State> {
                          onDrop={this.fileDropHandler}>
                         <div className="upload-icon"></div>
                         <p onDrop={this.fileDropHandler}>
-                            {this.state.draggedOver?
+                            {this.state.draggedOver ?
                                 "Drop file"
                                 : "Drag & drop file here or click to select"}
                         </p>
                     </div>
                 </div>
             </label>
-        )
+        );
     }
 }

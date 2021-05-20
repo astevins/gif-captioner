@@ -1,5 +1,5 @@
-import React from 'react';
-import {render, cleanup, screen, fireEvent} from '@testing-library/react'
+import React from "react";
+import {render, cleanup, screen, fireEvent} from "@testing-library/react";
 import Dropzone from "../components/Dropzone";
 
 function initDropzone(fileSelectCallback: (files: File[]) => void = jest.fn()): HTMLElement {
@@ -10,8 +10,9 @@ function initDropzone(fileSelectCallback: (files: File[]) => void = jest.fn()): 
 export function simulateFileDrop(dropzone: HTMLElement, files: File[]) {
     fireEvent.drop(dropzone, {
         dataTransfer: {
-            files: files,
-        }});
+            files: files
+        }
+    });
 }
 
 describe("Dropzone", () => {
@@ -19,9 +20,9 @@ describe("Dropzone", () => {
     let testPdf: File;
 
     beforeAll(() => {
-        testGif = new File(["data"], "toad.gif", { type: "image/gif" });
-        testPdf = new File(["data"], "dragonfly.pdf", { type: "application/pdf" });
-    })
+        testGif = new File(["data"], "toad.gif", {type: "image/gif"});
+        testPdf = new File(["data"], "dragonfly.pdf", {type: "application/pdf"});
+    });
 
     it("renders dropzone", () => {
         const dropzone = initDropzone();
@@ -72,7 +73,7 @@ describe("Dropzone", () => {
         const fileInput = screen.getByTitle("file input");
 
         fireEvent.change(fileInput, {
-            target: { files: [testFile] },
+            target: {files: [testFile]}
         });
 
         expect(fileDropCallback).toHaveBeenCalledTimes(1);
