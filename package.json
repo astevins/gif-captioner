@@ -16,5 +16,6 @@
     "install-client": "cd client && yarn install",
     "install-server": "cd server && yarn install",
     "install-all-deps": "concurrently \"yarn server-install\" \"yarn client-install\""
-  }
+  },
+  "devDependencies": {}
 }
