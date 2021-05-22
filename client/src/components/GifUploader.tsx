@@ -94,9 +94,7 @@ class GifUploader extends React.Component<Props, State> {
         } catch (error: any) {
             this.setState({uploadState: "error"});
             if (error && error.response) {
-                this.setErrorMessage(ErrorMsgType.fileSelect,
-                    "Failed to upload, server responded with \n" +
-                    +error.response.status + ": " + error.response.data.message);
+                this.setErrorMessage(ErrorMsgType.fileSelect, error.message);
             } else if (error.request) {
                 this.setErrorMessage(ErrorMsgType.fileSelect,
                     "Failed to upload, no response from server.");
